@@ -1,0 +1,56 @@
+CREATE DATABASE IF NOT EXISTS mydoctor;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT NOT NULL PRIMARY KEY ,
+  email VARCHAR(255) NOT NULL UNIQUE ,
+  encrypted_password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS persons (
+  id INT NOT NULL PRIMARY KEY ,
+  user_id INT NOT NULL ,
+  name VARCHAR(30) NOT NULL ,
+  birth_date DATE NOT NULL ,
+  gender VARCHAR(20) NOT NULL ,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS phone_numbers (
+  id INT NOT NULL PRIMARY KEY ,
+  person_id INT NOT NULL ,
+  ddi INT NOT NULL DEFAULT 55 ,
+  ddd INT NOT NULL ,
+  number INT NOT NULL ,
+  type VARCHAR(50) NOT NULL,
+  FOREIGN KEY (person_id) REFERENCES persons(id) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS doctors (
+  id INT NOT NULL PRIMARY KEY ,
+  person_id INT NOT NULL ,
+  board_number VARCHAR(100) NOT NULL ,
+  FOREIGN KEY (person_id) REFERENCES persons(id) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS patients (
+  id INT NOT NULL PRIMARY KEY ,
+  person_id INT NOT NULL ,
+  FOREIGN KEY (person_id) REFERENCES persons(id) ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS health_plan_providers (
+  id INT NOT NULL PRIMARY KEY ,
+  name VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS patient_health_plans (
+  id INT NOT NULL PRIMARY KEY ,
+  patient_id INT NOT NULL ,
+  health_plan_provider_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL ,
+  number VARCHAR(100) NOT NULL ,
+  start_date DATE NOT NULL ,
+  end_date DATE,
+  FOREIGN KEY (patient_id) REFERENCES patients(id) ON UPDATE CASCADE ON DELETE NO ACTION,
+  FOREIGN KEY (health_plan_provider_id) REFERENCES health_plan_providers(id) ON UPDATE CASCADE ON DELETE NO ACTION
+)
