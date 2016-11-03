@@ -16,7 +16,7 @@ public class DatabaseManager {
     private DatabaseManager(){
         try {
             Options options = new Options("localhost", 3306, "mydoctor", "root", "");
-            String connectionUrl = "jdbc:mysql://" + options.dbHost + ":" + options.dbPort + "/" + options.database;
+            String connectionUrl = "jdbc:mysql://" + options.dbHost + ":" + options.dbPort + "/" + options.database + "?useSSL=false";
 
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(connectionUrl);

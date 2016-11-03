@@ -20,6 +20,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User find(int id) {
+        // TODO implement
+        return null;
+    }
+
+    @Override
     public User login(String email, String encryptedPassword) {
         User user = null;
         String sql = "SELECT " +
@@ -47,6 +53,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User register(User user) {
+        // TODO implement
+        return null;
+    }
+
+    @Override
+    public User save(User user) {
         // TODO implement
         return null;
     }
