@@ -21,7 +21,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User login(String email, String encryptedPassword) {
-        // TODO Add the joins to the query if necessary with the data from doctor and patient
         User user = null;
         String sql = "SELECT " +
                 " u.id AS u_id, u.email AS u_email" +

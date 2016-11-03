@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * Created by augustoccesar on 10/6/16.
  */
@@ -13,6 +15,7 @@ public class Doctor {
     // Relations
 
     private Person person;
+    private List<Expertise> expertiseList;
 
     // Getters and Setters
 
@@ -38,5 +41,13 @@ public class Doctor {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public List<Expertise> getExpertiseList() {
+        return expertiseList;
+    }
+
+    public void setExpertiseList(List<Expertise> expertiseList) {
+        this.expertiseList = expertiseList;
     }
 }
