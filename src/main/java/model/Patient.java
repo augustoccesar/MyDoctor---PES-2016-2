@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class Patient {
+public class Patient implements ApplicationModel{
 
     // Attributes
 
@@ -38,6 +40,11 @@ public class Patient {
 
     public void setHealthPlan(HealthPlan healthPlan) {
         this.healthPlan = healthPlan;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }
 

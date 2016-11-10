@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class User {
+public class User implements ApplicationModel{
 
     // Attributes
 
@@ -47,5 +49,10 @@ public class User {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

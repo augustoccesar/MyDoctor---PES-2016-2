@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 11/3/16.
  */
-public class Expertise {
+public class Expertise implements ApplicationModel{
 
     // Attributes
 
@@ -26,5 +28,10 @@ public class Expertise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean isValid() {
+        return name != null && !name.isEmpty() && !name.trim().equals("");
     }
 }

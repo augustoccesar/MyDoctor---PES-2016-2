@@ -1,11 +1,13 @@
 package model;
 
+import model.base.ApplicationModel;
+
 import java.util.List;
 
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class Doctor {
+public class Doctor implements ApplicationModel {
 
     // Attributes
 
@@ -49,5 +51,10 @@ public class Doctor {
 
     public void setExpertiseList(List<Expertise> expertiseList) {
         this.expertiseList = expertiseList;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

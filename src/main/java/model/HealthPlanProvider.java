@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class HealthPlanProvider {
+public class HealthPlanProvider implements ApplicationModel{
 
     // Attributes
 
@@ -26,5 +28,10 @@ public class HealthPlanProvider {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

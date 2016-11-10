@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 11/3/16.
  */
-public class PointOfCare {
+public class PointOfCare implements ApplicationModel{
 
     // Attributes
 
@@ -74,5 +76,10 @@ public class PointOfCare {
 
     public void setPointOfCareType(PointOfCareType pointOfCareType) {
         this.pointOfCareType = pointOfCareType;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

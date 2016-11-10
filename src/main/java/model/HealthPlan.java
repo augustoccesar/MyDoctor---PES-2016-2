@@ -1,11 +1,13 @@
 package model;
 
+import model.base.ApplicationModel;
+
 import java.util.Date;
 
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class HealthPlan {
+public class HealthPlan implements ApplicationModel{
 
     // Attributes
 
@@ -67,5 +69,10 @@ public class HealthPlan {
 
     public void setHealthPlanProvider(HealthPlanProvider healthPlanProvider) {
         this.healthPlanProvider = healthPlanProvider;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

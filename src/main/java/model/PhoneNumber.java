@@ -1,9 +1,11 @@
 package model;
 
+import model.base.ApplicationModel;
+
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class PhoneNumber {
+public class PhoneNumber implements ApplicationModel {
 
     // Attributes
 
@@ -65,5 +67,10 @@ public class PhoneNumber {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implement
     }
 }

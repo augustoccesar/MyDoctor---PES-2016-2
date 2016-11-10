@@ -1,12 +1,14 @@
 package model;
 
+import model.base.ApplicationModel;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by augustoccesar on 10/6/16.
  */
-public class Person {
+public class Person implements ApplicationModel{
 
     // Attributes
 
@@ -86,5 +88,10 @@ public class Person {
 
     public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
+    }
+
+    @Override
+    public boolean isValid() {
+        return true; // TODO Implements
     }
 }
