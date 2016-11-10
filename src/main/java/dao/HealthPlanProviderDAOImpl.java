@@ -2,12 +2,14 @@ package dao;
 
 import dao.interfaces.HealthPlanProviderDAO;
 import database.DatabaseManager;
+import exceptions.EntityNotPassedValidation;
 import mappers.HealthPlaneProviderMapper;
 import model.HealthPlanProvider;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,21 @@ public class HealthPlanProviderDAOImpl implements HealthPlanProviderDAO {
 
     @Override
     public HealthPlanProvider save(HealthPlanProvider healthPlanProvider) {
-        // TODO Implement
-        return null;
+        if(!healthPlanProvider.isValid()) throw new EntityNotPassedValidation(healthPlanProvider);
+
+        String sql = "INSERT INTO health_plan_providers (name) VALUES (?)";
+
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, healthPlanProvider.getName());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            while(rs.next()){
+                healthPlanProvider.setId(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return healthPlanProvider;
     }
 }

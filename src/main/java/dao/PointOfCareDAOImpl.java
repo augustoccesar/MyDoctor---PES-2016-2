@@ -2,6 +2,7 @@ package dao;
 
 import dao.interfaces.PointOfCareDAO;
 import database.DatabaseManager;
+import exceptions.EntityNotPassedValidation;
 import mappers.PointOfCareMapper;
 import mappers.PointOfCareTypeMapper;
 import model.PointOfCare;
@@ -9,6 +10,7 @@ import model.PointOfCare;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +72,27 @@ public class PointOfCareDAOImpl implements PointOfCareDAO {
 
     @Override
     public PointOfCare save(PointOfCare pointOfCare) {
-        // TODO Implement
-        return null;
+        if(!pointOfCare.isValid()) throw new EntityNotPassedValidation(pointOfCare);
+
+        String sql = "INSERT INTO point_of_care (point_of_care_type_id, phone_ddd, phone_number, street, number, district) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, pointOfCare.getPointOfCareType().getId());
+            stmt.setInt(2, pointOfCare.getPhoneDdd());
+            stmt.setInt(3, pointOfCare.getPhoneNumber());
+            stmt.setString(4, pointOfCare.getStreet());
+            stmt.setInt(5, pointOfCare.getNumber());
+            stmt.setString(6, pointOfCare.getDistrict());
+
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            while(rs.next()){
+                pointOfCare.setId(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pointOfCare;
     }
 }

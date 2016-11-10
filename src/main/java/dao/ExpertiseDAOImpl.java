@@ -2,12 +2,14 @@ package dao;
 
 import dao.interfaces.ExpertiseDAO;
 import database.DatabaseManager;
+import exceptions.EntityNotPassedValidation;
 import mappers.ExpertiseMapper;
 import model.Expertise;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class ExpertiseDAOImpl implements ExpertiseDAO {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                expertise = ExpertiseMapper.readFromResultSet("e", rs);
+                expertise = new ExpertiseMapper().readFromResultSet("e", rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,7 +52,7 @@ public class ExpertiseDAOImpl implements ExpertiseDAO {
         try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Expertise expertise = ExpertiseMapper.readFromResultSet("e", rs);
+                Expertise expertise = new ExpertiseMapper().readFromResultSet("e", rs);
 
                 expertiseList.add(expertise);
             }
@@ -63,7 +65,21 @@ public class ExpertiseDAOImpl implements ExpertiseDAO {
 
     @Override
     public Expertise save(Expertise expertise) {
-        // TODO Implement
-        return null;
+        if(!expertise.isValid()) throw new EntityNotPassedValidation(expertise);
+
+        String sql = "INSERT INTO expertise (name) VALUES (?)";
+
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, expertise.getName());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            while(rs.next()){
+                expertise.setId(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return expertise;
     }
 }
