@@ -32,6 +32,6 @@ public class HealthPlanProvider implements ApplicationModel{
 
     @Override
     public boolean isValid() {
-        return true; // TODO Implement
+        return name != null && !name.isEmpty() && !name.trim().equals("");
     }
 }

@@ -80,6 +80,6 @@ public class PointOfCare implements ApplicationModel{
 
     @Override
     public boolean isValid() {
-        return true; // TODO Implement
+        return pointOfCareType != null;
     }
 }
