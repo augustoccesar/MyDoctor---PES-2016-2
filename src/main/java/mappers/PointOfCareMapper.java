@@ -1,5 +1,6 @@
 package mappers;
 
+import mappers.interfaces.Mapper;
 import model.PointOfCare;
 
 import java.sql.ResultSet;
@@ -8,8 +9,10 @@ import java.sql.SQLException;
 /**
  * Created by augustoccesar on 11/3/16.
  */
-public class PointOfCareMapper {
-    public static PointOfCare readFromResultSet(String alias, ResultSet rs) throws SQLException {
+public class PointOfCareMapper implements Mapper<PointOfCare> {
+
+    @Override
+    public PointOfCare readFromResultSet(String alias, ResultSet rs) throws SQLException {
         PointOfCare pointOfCare = new PointOfCare();
 
         pointOfCare.setId(rs.getInt(alias + "_id"));
